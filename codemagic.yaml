@@ -10,12 +10,12 @@ workflows:
           npm install @capacitor/core @capacitor/cli @capacitor/android
       - name: Build web project
         script: npm run build
-      - name: Initialize Capacitor and Android
+      - name: Add Android platform
+        script: npx cap add android || true
+      - name: Copy assets and Sync
         script: |
-          npx cap init Pgnews com.pgnews.app --web-dir dist
-          npx cap add android
-      - name: Copy assets
-        script: npx cap copy
+          npx cap copy
+          npx cap sync
       - name: Build Android APK
         script: |
           cd android
