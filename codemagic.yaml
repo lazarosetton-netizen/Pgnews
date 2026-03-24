@@ -5,12 +5,16 @@ workflows:
     instance_type: mac_mini_m1
     scripts:
       - name: Install dependencies
-        script: npm install
+        script: | 
+          npm install
+          npm install @capacitor/core @capacitor/cli @capacitor/android
       - name: Build web project
         script: npm run build
-      - name: Add Android platform
-        script: npx cap add android || true
-      - name: Copy web assets to Android
+      - name: Initialize Capacitor and Android
+        script: |
+          npx cap init Pgnews com.pgnews.app --web-dir dist
+          npx cap add android
+      - name: Copy assets
         script: npx cap copy
       - name: Build Android APK
         script: |
